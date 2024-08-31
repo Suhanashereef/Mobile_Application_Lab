@@ -1,0 +1,191 @@
+CALCULATOR
+-----------
+CODE
+-----
+ACTIVITY_MAIN.XML
+----------------
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Display area -->
+    <TextView
+        android:id="@+id/display"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="#E0E0E0"
+        android:padding="24dp"
+        android:text="0"
+        android:textSize="36sp"
+        android:textColor="#000"
+        android:textAlignment="viewEnd"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Buttons Grid -->
+    <GridLayout
+        android:id="@+id/buttonsGrid"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:columnCount="4"
+        android:rowCount="5"
+        app:layout_constraintTop_toBottomOf="@id/display"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button android:id="@+id/button7" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7" />
+        <Button android:id="@+id/button8" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="8" />
+        <Button android:id="@+id/button9" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="9" />
+        <Button android:id="@+id/buttonDivide" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/" />
+
+        <Button android:id="@+id/button4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4" />
+        <Button android:id="@+id/button5" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="5" />
+        <Button android:id="@+id/button6" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="6" />
+        <Button android:id="@+id/buttonMultiply" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="*" />
+
+        <Button android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1" />
+        <Button android:id="@+id/button2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2" />
+        <Button android:id="@+id/button3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="3" />
+        <Button android:id="@+id/buttonSubtract" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-" />
+
+        <Button android:id="@+id/button0" android:layout_width="0dp" android:layout_height="wrap_content" android:text="0" android:layout_columnSpan="2" />
+        <Button android:id="@+id/buttonClear" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="C" />
+        <Button android:id="@+id/buttonAdd" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" />
+        <Button android:id="@+id/buttonEqual" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="=" android:layout_rowSpan="2" />
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+MAINACTIVITY.JAVA
+-----------------
+package com.example.calculator;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView display;
+    private String currentInput = "";
+    private double operand1 = 0;
+    private double operand2 = 0;
+    private String operator = "";
+    private boolean isNewOperation = true;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        display = findViewById(R.id.display);
+
+        initializeButtons();
+    }
+
+    private void initializeButtons() {
+        // Digit buttons
+        setupButton(R.id.button0, "0");
+        setupButton(R.id.button1, "1");
+        setupButton(R.id.button2, "2");
+        setupButton(R.id.button3, "3");
+        setupButton(R.id.button4, "4");
+        setupButton(R.id.button5, "5");
+        setupButton(R.id.button6, "6");
+        setupButton(R.id.button7, "7");
+        setupButton(R.id.button8, "8");
+        setupButton(R.id.button9, "9");
+
+        // Operator buttons
+        setupOperationButton(R.id.buttonAdd, "+");
+        setupOperationButton(R.id.buttonSubtract, "-");
+        setupOperationButton(R.id.buttonMultiply, "*");
+        setupOperationButton(R.id.buttonDivide, "/");
+
+        // Clear button
+        Button clearButton = findViewById(R.id.buttonClear);
+        clearButton.setOnClickListener(v -> {
+            display.setText("0");
+            currentInput = "";
+            operand1 = 0;
+            operand2 = 0;
+            operator = "";
+            isNewOperation = true;
+        });
+
+        // Equals button
+        Button equalButton = findViewById(R.id.buttonEqual);
+        equalButton.setOnClickListener(v -> {
+            if (!operator.isEmpty() && !currentInput.isEmpty()) {
+                operand2 = Double.parseDouble(currentInput);
+                double result = performOperation(operand1, operand2, operator);
+                display.setText(String.valueOf(result));
+                operand1 = result;
+                operator = "";
+                currentInput = "";
+                isNewOperation = true;
+            }
+        });
+    }
+
+    private void setupButton(int buttonId, String value) {
+        Button button = findViewById(buttonId);
+        button.setOnClickListener(v -> {
+            if (isNewOperation) {
+                display.setText("");
+                isNewOperation = false;
+            }
+            display.append(value);
+            currentInput += value;
+        });
+    }
+
+    private void setupOperationButton(int buttonId, String op) {
+        Button button = findViewById(buttonId);
+        button.setOnClickListener(v -> {
+            if (!currentInput.isEmpty()) {
+                if (!operator.isEmpty()) {
+                    operand2 = Double.parseDouble(currentInput);
+                    operand1 = performOperation(operand1, operand2, operator);
+                    display.setText(String.valueOf(operand1));
+                } else {
+                    operand1 = Double.parseDouble(currentInput);
+                }
+                operator = op;
+                currentInput = "";
+                isNewOperation = true;
+            }
+        });
+    }
+
+    private double performOperation(double operand1, double operand2, String operator) {
+        switch (operator) {
+            case "+":
+                return operand1 + operand2;
+            case "-":
+                return operand1 - operand2;
+            case "*":
+                return operand1 * operand2;
+            case "/":
+                if (operand2 != 0) {
+                    return operand1 / operand2;
+                } else {
+                    // Show an error or handle division by zero
+                    return 0; // Or you might want to show a message
+                }
+            default:
+                return 0;
+        }
+    }
+}
+
