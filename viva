@@ -1,0 +1,79 @@
+What are the key components of an Android application?
+The key components of an Android app include:
+▪ Activities: Represents a screen with a user interface.
+▪ Services: Background tasks that run without a UI.
+▪ Broadcast Receivers: Respond to system-wide broadcast announcements 
+(e.g., network changes).
+▪ Content Providers: Allow data sharing between applications.
+▪ Intents: Used to communicate between components (e.g., open a new 
+screen).
+What is an Activity in Android? Can you explain its lifecycle?
+o An Activity is a single screen in an Android app that provides a user interface. Each 
+Activity interacts with the user through UI elements (buttons, text fields, etc.).
+o Activity Lifecycle: The lifecycle methods include:
+▪ onCreate(): Called when the activity is first created.
+▪ onStart(): Called when the activity becomes visible.
+▪ onResume(): Called when the activity starts interacting with the user.
+▪ onPause(): Called when the activity is partially obscured but still visible.
+▪ onStop(): Called when the activity is no longer visible.
+▪ onDestroy(): Called when the activity is being destroyed.
+▪ onRestart(): Called when the activity is being restarted after being stopped
+What is an Intent in Android? What are the different types of Intents?
+o An Intent is a messaging object used to request an action from another component 
+(e.g., Activity, Service).
+o Types of Intents:
+▪ Explicit Intent: Specifies the component to be called by its class name (e.g., 
+opening a specific activity).
+▪ Implicit Intent: Does not specify the component directly but allows Android 
+to determine which component (app) can handle the action (e.g., opening a 
+web page in a browser).
+What is a Fragment, and how is it different from an Activity?
+o A Fragment is a modular section of an Activity. It represents a part of the UI and can 
+be reused within different Activities.
+o Differences:
+An Activity is a complete UI component, while a Fragment represents a 
+portion of the UI that is typically part of an Activity.
+▪ A Fragment can be added, removed, or replaced dynamically at runtime, 
+while Activities are generally static.
+▪ Fragments can manage their own lifecycle, but they depend on the Activity 
+for context.
+What are Gradle?
+o Gradle is the build automation tool used by Android Studio. It compiles, packages, 
+and manages dependencies for Android projects.
+What is the AndroidManifest.xml file, and what is its purpose?
+o The AndroidManifest.xml file is a required component of every Android app. It 
+provides essential information about the app to the Android system, including:
+▪ Declaring Activities, Services, and Broadcast Receivers.
+▪ Permissions required by the app (e.g., Internet access, location).
+▪ Defining app’s minimum SDK version and features.
+What is a Layout in Android?
+A Layout in Android is a container that holds UI components (views) such as buttons, text 
+fields, and images.
+What are the different types of Layouts available in Android?
+Android provides several types of layouts that allow you to organize views in different ways:
+o LinearLayout: Arranges the child views either vertically or horizontally.
+o RelativeLayout: Arranges child views relative to each other or to the parent layout.
+o ConstraintLayout: A flexible and efficient layout for creating complex UIs with fewer 
+nested views, using constraints between the views.
+o FrameLayout: A simple layout that stacks its children on top of each other, with the 
+first child being at the bottom.
+o GridLayout: Places child views in a grid-like structure, with rows and columns.
+o TableLayout: Arranges child views in rows and columns like a table.
+How does Toast work in Android?
+• A Toast is a simple popup message that displays at the bottom of the screen (by default), and 
+you can customize the position, duration, and content.
+• It is commonly used for showing quick messages, such as "Data saved", "Network error", or 
+"Invalid input".
+What are SharedPreferences in Android
+SharedPreferences is a key-value storage mechanism provided by Android to store 
+small amounts of primitive data (like user preferences, settings, or simple app state 
+data) in a persistent way. 
+ArrayAdapter in Android
+An ArrayAdapter in Android is a type of Adapter that binds a data source (usually 
+an array or a list) to a ListView, Spinner, or other types of views that need to display 
+a list of items.
+Features of SQLite Database in Android
+SQLite is a lightweight, serverless, self-contained relational database engine that is 
+widely used in Android applications for local data storage. It is embedded directly 
+into the application and provides an efficient way to store and retrieve structured data.
+SQLite Database Operations in Android
